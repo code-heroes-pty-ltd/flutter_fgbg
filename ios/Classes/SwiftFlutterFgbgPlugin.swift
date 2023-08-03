@@ -14,13 +14,13 @@ public class SwiftFlutterFGBGPlugin: NSObject, FlutterPlugin, FlutterStreamHandl
 
     let notificationCenter = NotificationCenter.default
     notificationCenter.addObserver(instance,
-                                   selector: #selector(didEnterBackground),
-                                   name: UIApplication.didEnterBackgroundNotification,
+                                   selector: #selector(willResignActive),
+                                   name: UIApplication.willResignActiveNotification,
                                    object: nil)
     
     notificationCenter.addObserver(instance,
-                                   selector: #selector(willEnterForeground),
-                                   name: UIApplication.willEnterForegroundNotification,
+                                   selector: #selector(didBecomeActive),
+                                   name: UIApplication.didBecomeActiveNotification,
                                    object: nil)
   }
     
@@ -35,11 +35,11 @@ public class SwiftFlutterFGBGPlugin: NSObject, FlutterPlugin, FlutterStreamHandl
         return nil
     }
     
-    @objc func didEnterBackground() {
+    @objc func willResignActive() {
         self.eventSink?("background")
     }
 
-    @objc func willEnterForeground() {
+    @objc func didBecomeActive() {
         self.eventSink?("foreground")
     }
 }
