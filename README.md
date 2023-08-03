@@ -2,6 +2,10 @@
 
 Flutter plugin to detect when app(not Flutter container) goes to background or foreground.
 
+This is a fork of [ajinasokan/flutter_fgbg](https://github.com/ajinasokan/flutter_fgbg) with the following changes implemented:  
+- the app listens on `UIApplication.willResignActiveNotification` and `UIApplication.didBecomeActiveNotification` instead of `UIApplication.didEnterBackgroundNotification` and `UIApplication.willEnterForegroundNotification` to react on cases where the app becomes inactive. This may happen for example, when the user taps the home button twice or when there is a incoming call.
+- `FGBGEvents.ignoreWhile` is now asynchronous
+
 ## Why
 
 Flutter has [WidgetsBindingObserver](https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver-class.html) to get notified when app changes its state from active to inactive states and back. But it actually includes the state changes of the embedding Activity/ViewController as well. So if you have a plugin that opens a new activity/view controller or in iOS if you start a FaceID prompt then WidgetsBindingObserver will report as the app is inactive/resumed.
